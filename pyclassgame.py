@@ -18,7 +18,7 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], tags = []):
+    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], tags = [], gui = False):
         self.name = None
         self.scene = None
         self.x = x
@@ -28,11 +28,17 @@ class GameObject:
         self.color = color
         self.alpha = 255
         self.tags = tags
+        self.gui = gui
     def drawing(self):
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
         self.surface.fill(self.color)
-        self.scene.game.screen.blit(self.surface, (self.x - self.scene.game.camera.x, self.y - self.scene.game.camera.y))
+        drawingX = self.x
+        drawingY = self.y
+        if self.gui == False:
+            drawingX -= self.scene.game.camera.x
+            drawingY -= self.scene.game.camera.y
+        self.scene.game.screen.blit(self.surface, (drawingX, drawingY))
     def add_tag(self, tag):
         self.tags.append(tag)
         return tag
@@ -45,13 +51,16 @@ class GameObject:
         return self.tags
 
 class Camera:
-    def __init__(self, game, x = 0, y = 0):
+    def __init__(self, game, x = 0, y = 0, delay = 50):
         self.game = game
         self.x = x
         self.y = y
+        self.delay = delay
     def target(self, x, y):
-        self.x = x - (self.game.width / 2)
-        self.y = y - (self.game.height / 2)
+        # self.x = x - (self.game.width / 2)
+        # self.y = y - (self.game.height / 2)
+        self.x += ((x - self.game.width/2) - self.x) / self.delay
+        self.y += ((y - self.game.height/2) - self.y) / self.delay
 
 class Scene:
     def __init__(self):
@@ -62,6 +71,7 @@ class Scene:
         self.game_objects[name] = game_object
         self.game_objects[name].name = name
         self.game_objects[name].scene = self
+        if hasattr(self.game_objects[name], 'load'): self.game_objects[name].load()
         return self.game_objects[name]
     def instant_game_object(self, game_object):
         random_uuid_name = str(uuid.uuid4())
@@ -72,14 +82,15 @@ class Scene:
         return self.game_objects[name]
 
 class Game:
-    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], title = 'Title', fps = 60, default_scene = Scene()):
+    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', fps = 60, default_scene = Scene()):
         pygame.init()
         self.set_title(title)
         self.width = width
         self.height = height
         self.bg_color = bg_color
-        self.bg_alpha = 255
+        self.bg_alpha = bg_alpha
         self.screen = pygame.display.set_mode((self.width, self.height))
+        # self.screen.fill(self.bg_color)
         self.clock = pygame.time.Clock()
         self.fps = fps
         self.prev_time = pygame.time.get_ticks()
@@ -131,25 +142,35 @@ class Game:
                             getattr(active_scene, eventName)(event, key_name)
                         for game_object_name in game_objects:
                             game_object = game_objects[game_object_name]
-                            if hasattr(game_object, eventName):
+                            if hasattr(game_object, eventName) and self.pause == False:
                                 getattr(game_object, eventName)(event, key_name)
 
             current_time = pygame.time.get_ticks()
             self.delta_time = (current_time - self.prev_time) / 1000.0
             self.prev_time = current_time
 
-            self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-            self.bg_surface.set_alpha(self.bg_alpha)
-            self.bg_surface.fill(self.bg_color)
-            self.screen.blit(self.bg_surface, (0, 0))
+            if(self.pause == False):
+                self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+                self.bg_surface.set_alpha(self.bg_alpha)
+                self.bg_surface.fill(self.bg_color)
+                self.screen.blit(self.bg_surface, (0, 0))
 
-            if hasattr(active_scene, 'update') and self.pause == False: active_scene.update()
-            if hasattr(active_scene, 'draw'): active_scene.draw()
+            if hasattr(active_scene, 'update') and self.pause == False:
+                active_scene.update()
+            if hasattr(active_scene, 'draw') and self.pause == False:
+                active_scene.draw()
+
             for game_object_name in game_objects:
                 game_object = game_objects[game_object_name]
-                if hasattr(game_object, 'update') and self.pause == False: game_object.update()
-                game_object.drawing()
-                if hasattr(game_object, 'draw'): game_object.draw()
+
+                if hasattr(game_object, 'update') and self.pause == False:
+                    game_object.update()
+
+                if self.pause == False:
+                    game_object.drawing()
+
+                if hasattr(game_object, 'draw'):
+                    game_object.draw()
 
             pygame.display.flip()
             pygame.display.update()
@@ -161,6 +182,7 @@ class Game:
         self.scenes[name] = scene
         self.scenes[name].name = name
         self.scenes[name].game = self
+        if hasattr(self.scenes[name], 'load'): self.scenes[name].load()
         return self.scenes[name]
     def change_scene(self, name):
         self.active_scene = name
