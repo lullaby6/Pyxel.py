@@ -22,7 +22,6 @@ class Player (GameObject):
 
     def update(self):
         self.scene.game.camera.target(self.x, self.y)
-        # print('xd')
         pass
 
     def key_down(self, event, keyname):
