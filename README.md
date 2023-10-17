@@ -10,10 +10,12 @@
 - Game Title
 - Custom Events
 - GameObjects
+- GameObject CRUD
 - GameObject Alpha Color
-- GameObject UI
+- GameObject GUI
 - GameObject Tag
 - Scenes
+- Scene CRUD
 - Camera
 - Camera Smooth Follow
 - Background Alpha Color

@@ -120,7 +120,7 @@ class Game:
         while self.running:
             active_scene = self.get_active_scene()
             game_objects = active_scene.game_objects
-            events = {
+            self.pygame_events = {
                 'key_down': pygame.KEYDOWN,
                 'key_up': pygame.KEYUP,
                 'mouse_down': pygame.MOUSEBUTTONDOWN,
@@ -143,8 +143,8 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE and self.quit_on_escape:
                         self.running = False
-                for eventName in events:
-                    if event.type == events[eventName]:
+                for eventName in self.pygame_events:
+                    if event.type == self.pygame_events[eventName]:
                         key_name = None
                         if hasattr(event, 'key'): key_name = pygame.key.name(event.key)
                         if hasattr(active_scene, eventName):
