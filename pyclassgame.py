@@ -113,6 +113,8 @@ class Game:
 
         self.running = False
         self.pause = False
+
+        self.pygame = pygame
     def run(self):
         self.running = True
         while self.running:
@@ -219,6 +221,12 @@ class Game:
     def set_fps(self, fps):
         self.fps = fps
         self.clock = pygame.time.Clock()
+    def set_cursor(self, cursor):
+        pygame.mouse.set_cursor(cursor)
+    def hidde_cursor(self):
+        pygame.mouse.set_visible(False)
+    def show_cursor(self):
+        pygame.mouse.set_visible(True)
     def custom_event(self, eventName):
         active_scene = self.get_active_scene()
         game_objects = active_scene.game_objects
