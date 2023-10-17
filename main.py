@@ -13,6 +13,7 @@ class MainScene (Scene):
         # print(event.key, key_name)
         if key_name == 'f': self.game.toggle_fullscreen()
         elif key_name == 'p': self.game.toggle_pause()
+        elif key_name == 'o': self.game.screenshot()
 
 class Player (GameObject):
     def __init__(self, color):

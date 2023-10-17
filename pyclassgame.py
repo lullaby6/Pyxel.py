@@ -1,4 +1,4 @@
-import pygame, sys, json, uuid
+import pygame, sys, json, uuid, datetime, os
 
 Colors = {
     'white': (255, 255, 255),
@@ -238,3 +238,11 @@ class Game:
             game_object = game_objects[game_object_name]
             if hasattr(game_object, eventName) and self.pause == False:
                 getattr(game_object, eventName)()
+    def screenshot(self, folder_path = 'screenshots'):
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
+        screenshot_file_name = f'{self.title} screenshot - {timestamp}.png'
+        screenshot_file_path = os.path.join(folder_path, screenshot_file_name)
+        pygame.image.save(self.screen, screenshot_file_path)

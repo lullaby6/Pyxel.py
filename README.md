@@ -20,6 +20,7 @@
 - Camera Smooth Follow
 - Background Alpha Color
 - Load Functions
+- Screenshot
 
 ## To Do
 - Zoom
@@ -38,5 +39,3 @@
 - GameObject Ignore Pause
 - Resizable Window
 - Camera Shake
-- Screenshot
-- Cursor
