@@ -24,7 +24,6 @@
 
 ## To Do
 - Zoom
-- Camera Smooth Follow
 - Lights
 - Shadow
 - Physics
