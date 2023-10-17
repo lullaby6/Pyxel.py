@@ -216,3 +216,17 @@ class Game:
         self.pause = pause
     def toggle_pause(self):
         self.set_pause(not self.pause)
+    def set_fps(self, fps):
+        self.fps = fps
+        self.clock = pygame.time.Clock()
+    def custom_event(self, eventName):
+        active_scene = self.get_active_scene()
+        game_objects = active_scene.game_objects
+
+        if hasattr(active_scene, eventName) and self.pause == False:
+            getattr(active_scene, eventName)()
+
+        for game_object_name in game_objects:
+            game_object = game_objects[game_object_name]
+            if hasattr(game_object, eventName) and self.pause == False:
+                getattr(game_object, eventName)()
