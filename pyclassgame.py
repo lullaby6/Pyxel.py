@@ -18,7 +18,7 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], tags = [], gui = False):
+    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
         self.name = None
         self.scene = None
         self.x = x
@@ -26,7 +26,7 @@ class GameObject:
         self.width = width
         self.height = height
         self.color = color
-        self.alpha = 255
+        self.alpha = alpha
         self.tags = tags
         self.gui = gui
     def drawing(self):
@@ -80,6 +80,13 @@ class Scene:
         del self.game_objects[name]
     def get_game_object(self, name):
         return self.game_objects[name]
+    def get_game_objects_by_tag(self, tag):
+        objects = []
+        for game_object_name in self.game_objects:
+            game_object = self.game_objects[game_object_name]
+            if game_object.has_tag(tag):
+                objects.append(game_object)
+        return objects
 
 class Game:
     def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', fps = 60, default_scene = Scene()):
