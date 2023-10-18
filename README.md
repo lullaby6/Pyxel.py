@@ -16,6 +16,7 @@
 - GameObject Tag
 - GameObject On Click Event
 - GameObject On Collide Event
+- Images
 - Scenes
 - Scene CRUD
 - Camera
@@ -26,7 +27,6 @@
 - Icon
 
 ## To Do
-- Images
 - Text
 - Sounds
 - Lights
