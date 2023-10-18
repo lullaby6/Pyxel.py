@@ -14,6 +14,7 @@
 - GameObject Alpha Color
 - GameObject GUI
 - GameObject Tag
+- GameObject Z-Index
 - GameObject On Click Event
 - GameObject On Collide Event
 - Images
@@ -43,5 +44,4 @@
 - Mouse Leave Event
 
 ## Experimental/Bugged Feactures
-- GameObject Z-Index
 - Zoom
