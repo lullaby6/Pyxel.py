@@ -14,12 +14,15 @@ class MainScene (Scene):
         if key_name == 'f': self.game.toggle_fullscreen()
         elif key_name == 'p': self.game.toggle_pause()
         elif key_name == 'o': self.game.screenshot()
+        elif key_name == 'z': self.game.camera.set_zoom(0.5)
+        elif key_name == 'x': self.game.camera.set_zoom(1.0)
+        elif key_name == 'c': self.game.camera.set_zoom(1.5)
 
 class Player (GameObject):
     def __init__(self, color, x, y, width, height):
         super().__init__(x, y, width, height)
         self.color = color
-        self.alpha = 100
+        self.alpha = 255
 
     def update(self):
         self.scene.game.camera.target(self.x, self.y)
@@ -37,7 +40,7 @@ class Player (GameObject):
         if keyname == 'd': self.x += 10
 
 if __name__ == "__main__":
-    game = Game(width=640, height=480, bg_color=Colors['lightblue'], bg_alpha=60, title='Title')
+    game = Game(width=640, height=480, bg_color=Colors['lightblue'], bg_alpha=60, title='Title', quit_on_escape=True)
 
     game.set_scene('main', MainScene())
     game.get_active_scene().add_game_object('player', Player(color=Colors['red'], x=100, y=100, width=75, height=100))

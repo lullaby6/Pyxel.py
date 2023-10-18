@@ -16,6 +16,7 @@
 - GameObject Tag
 - GameObject On Click Event
 - GameObject On Collide Event
+- GameObject Z-Index
 - Scenes
 - Scene CRUD
 - Camera
@@ -34,12 +35,10 @@
 - Physics
 - TileMaps
 - Particles
-- GameObject Childs
 - GameObject Rotation
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
 - Resizable Window
 - Camera Shake
-- Cursor Pointer
 - Mouse Enter Event
 - Mouse Leave Event

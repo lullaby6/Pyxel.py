@@ -54,12 +54,13 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
         self.x = x
         self.y = y
+        self.z = z
         self.width = width
         self.height = height
         self.color = color
@@ -125,16 +126,21 @@ class Sound:
         pass
 
 class Camera:
-    def __init__(self, game, x = 0, y = 0, delay = 50):
+    def __init__(self, game, x = 0, y = 0, delay = 50, zoom = 1.0, minZoom = 0.1, maxZoom = 3.0):
         self.game = game
         self.x = x
         self.y = y
         self.delay = delay
+        self.zoom = zoom
+        self.minZoom = minZoom
+        self.maxZoom = maxZoom
     def target(self, x, y):
         # self.x = x - (self.game.width / 2)
         # self.y = y - (self.game.height / 2)
         self.x += ((x - self.game.width/2) - self.x) / self.delay
         self.y += ((y - self.game.height/2) - self.y) / self.delay
+    def set_zoom(self, zoom):
+        self.zoom = max(self.minZoom, min(self.maxZoom, zoom))
 
 class Scene:
     def __init__(self):
@@ -145,6 +151,14 @@ class Scene:
         self.game_objects[name] = game_object
         self.game_objects[name].name = name
         self.game_objects[name].scene = self
+
+        # Sort game objects by z
+        sorted_game_objects_by_z_list = sorted(self.game_objects.items(), key=lambda game_object: game_object[1].z, reverse=True)
+        sorted_game_objects_by_z = {}
+        for name, game_object in sorted_game_objects_by_z_list:
+            sorted_game_objects_by_z[name] = game_object
+        self.game_objects = sorted_game_objects_by_z
+
         if hasattr(self.game_objects[name], 'load'): self.game_objects[name].load()
         return self.game_objects[name]
     def instant_game_object(self, game_object):
@@ -163,7 +177,7 @@ class Scene:
         return objects
 
 class Game:
-    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', fps = 60, default_scene = Scene()):
+    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', fps = 60, quit_on_escape = False, default_scene = Scene()):
         pygame.init()
         self.set_title(title)
         self.width = width
@@ -180,7 +194,7 @@ class Game:
         self.active_scene = None
         self.set_scene('default', default_scene)
 
-        self.quit_on_escape = False
+        self.quit_on_escape = quit_on_escape
         self.fullscreen = False
 
         self.camera = Camera(self, 0, 0)
@@ -242,6 +256,9 @@ class Game:
             self.delta_time = (current_time - self.prev_time) / 1000.0
             self.prev_time = current_time
 
+            if self.camera.zoom != 1.0:
+                self.screen.fill(self.bg_color)
+
             if(self.pause == False):
                 self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
                 self.bg_surface.set_alpha(self.bg_alpha)
@@ -272,6 +289,13 @@ class Game:
                     game_object.drawing()
                 if hasattr(game_object, 'draw') and self.pause == False:
                     game_object.draw()
+
+            # Draw the zoomed screen
+            if self.camera.zoom != 1.0:
+                scaled_screen = pygame.transform.scale(self.screen, (int(self.width * self.camera.zoom), int(self.height * self.camera.zoom)))
+                self.screen.fill(self.bg_color)
+                scaled_screen_position = (self.width/2 - scaled_screen.get_size()[0]/2, self.height/2 - scaled_screen.get_size()[1]/2)
+                self.screen.blit(scaled_screen, scaled_screen_position)
 
             pygame.display.flip()
             pygame.display.update()
