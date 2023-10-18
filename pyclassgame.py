@@ -89,8 +89,8 @@ class GameObject:
         return self.tags
 
 class Image(GameObject):
-    def __init__(self, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
-        super().__init__(alpha=0)
+    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
+        super().__init__(x=x, y=y, width=width, height=height, color=color, alpha=alpha, tags=tags, gui=gui)
         self.image_offset_x = image_offset_x
         self.image_offset_y = image_offset_y
         self.image_alpha = image_alpha
@@ -125,6 +125,15 @@ class Image(GameObject):
         self.set_image_size(width=width, height=None)
     def set_image_height(self, height):
          self.set_image_size(width=None, height=height)
+    def set_image_offset(self, image_offset_x = None, image_offset_y = None):
+        if image_offset_x != None:
+            self.image_offset_x = image_offset_x
+        if image_offset_y != None:
+            self.image_offset_y = image_offset_y
+    def set_image_offset_x(self, image_offset_x):
+        self.set_image_offset(image_offset_x=image_offset_x, image_offset_y=None)
+    def set_image_offset_y(self, image_offset_y):
+        self.set_image_offset(image_offset_x=None, image_offset_y=image_offset_y)
 
 
 class Text(GameObject):
