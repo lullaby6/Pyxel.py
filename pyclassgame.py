@@ -268,11 +268,9 @@ class Game:
 
                 if hasattr(game_object, 'update') and self.pause == False:
                     game_object.update()
-
                 if self.pause == False:
                     game_object.drawing()
-
-                if hasattr(game_object, 'draw'):
+                if hasattr(game_object, 'draw') and self.pause == False:
                     game_object.draw()
 
             pygame.display.flip()
