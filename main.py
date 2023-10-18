@@ -27,6 +27,8 @@ class Player (GameObject):
         pass
     def on_click(self, event):
         print('omg')
+    def on_collide(self, other):
+        print('collide!!!!!!!!!!!!')
 
     def key_down(self, event, keyname):
         if keyname == 'w': self.y -= 10

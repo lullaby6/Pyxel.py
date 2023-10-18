@@ -55,6 +55,7 @@ Colors = {
 
 class GameObject:
     def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
+        self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
         self.x = x
@@ -254,6 +255,16 @@ class Game:
 
             for game_object_name in game_objects:
                 game_object = game_objects[game_object_name]
+
+                # Check for collisions
+                for game_object_name_2 in game_objects:
+                    game_object_2 = game_objects[game_object_name_2]
+                    if game_object.id != game_object_2.id:
+                        if game_object.gui == False and game_object_2.gui == False and is_collide(game_object, game_object_2):
+                            if hasattr(game_object, 'on_collide'):
+                                game_object.on_collide(game_object_2)
+                            if hasattr(game_object_2, 'on_collide'):
+                                game_object_2.on_collide(game_object)
 
                 if hasattr(game_object, 'update') and self.pause == False:
                     game_object.update()
