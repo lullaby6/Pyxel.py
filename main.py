@@ -24,8 +24,9 @@ class Player (GameObject):
     def update(self):
         self.scene.game.camera.target(self.x, self.y)
         cube = self.scene.get_game_object('cube')
-        print(is_collide(self, cube))
         pass
+    def on_click(self, event):
+        print('omg')
 
     def key_down(self, event, keyname):
         if keyname == 'w': self.y -= 10
@@ -39,6 +40,6 @@ if __name__ == "__main__":
     game.set_scene('main', MainScene())
     game.get_active_scene().add_game_object('player', Player(color=Colors['red'], x=100, y=100, width=75, height=100))
     game.get_active_scene().add_game_object('cube', GameObject(width = 30, height = 50))
-    game.get_active_scene().instant_game_object(GameObject(gui = True))
+    gui = game.get_active_scene().instant_game_object(GameObject(gui = True))
 
     game.run()

@@ -28,6 +28,13 @@ def is_collide(a, b):
         a.y < (b.y + b.height)
     )
 
+class ObjectPlaceholder:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
 
 Colors = {
     'white': (255, 255, 255),
@@ -141,7 +148,7 @@ class Scene:
         return self.game_objects[name]
     def instant_game_object(self, game_object):
         random_uuid_name = str(uuid.uuid4())
-        self.add_game_object(random_uuid_name, game_object)
+        return self.add_game_object(random_uuid_name, game_object)
     def remove_game_object(self, name):
         del self.game_objects[name]
     def get_game_object(self, name):
@@ -212,7 +219,11 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for game_object_name in game_objects:
                         game_object = game_objects[game_object_name]
-                        cursor = {'x': event.pos[0], 'y': event.pos[1], 'width': 0, 'height': 0}
+                        cursor = None
+                        if game_object.gui == True:
+                            cursor = ObjectPlaceholder(event.pos[0], event.pos[1], 0, 0)
+                        else:
+                            cursor = ObjectPlaceholder(event.pos[0] + self.camera.x, event.pos[1] + self.camera.y, 0, 0)
                         if is_inside(cursor, game_object) and hasattr(game_object, 'on_click'):
                             getattr(game_object, 'on_click')(event)
                 for eventName in self.pygame_events:
