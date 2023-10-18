@@ -15,6 +15,7 @@
 - GameObject GUI
 - GameObject Tag
 - GameObject On Click Event
+- GameObject On Collide Event
 - Scenes
 - Scene CRUD
 - Camera
@@ -27,7 +28,6 @@
 - Images
 - Text
 - Sounds
-- Collide
 
 - Zoom
 - Lights
