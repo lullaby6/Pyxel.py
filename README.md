@@ -28,7 +28,6 @@
 - Images
 - Text
 - Sounds
-
 - Zoom
 - Lights
 - Shadow
