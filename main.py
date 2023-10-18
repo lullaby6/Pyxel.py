@@ -1,4 +1,4 @@
-from pyclassgame import Game, Scene, GameObject, Colors, is_collide
+from pyclassgame import Game, Scene, GameObject, Colors
 
 class MainScene (Scene):
     def __init__(self):
