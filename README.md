@@ -23,6 +23,7 @@
 - Background Alpha Color
 - Load Functions
 - Screenshot
+- Icon
 
 ## To Do
 - Images

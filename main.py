@@ -1,4 +1,4 @@
-from pyclassgame import Game, Scene, GameObject, Colors
+from pyclassgame import Game, Scene, GameObject, Colors, Image
 
 class MainScene (Scene):
     def __init__(self):
@@ -26,7 +26,7 @@ class Player (GameObject):
 
     def update(self):
         self.scene.game.camera.target(self.x, self.y)
-        cube = self.scene.get_game_object('cube')
+        # cube = self.scene.get_game_object('cube')
         pass
     def on_click(self, event):
         print('omg')
@@ -41,10 +41,12 @@ class Player (GameObject):
 
 if __name__ == "__main__":
     game = Game(width=640, height=480, bg_color=Colors['lightblue'], bg_alpha=60, title='Title', quit_on_escape=True)
+    game.set_icon('icon.png')
 
     game.set_scene('main', MainScene())
     game.get_active_scene().add_game_object('player', Player(color=Colors['red'], x=100, y=100, width=75, height=100))
     game.get_active_scene().add_game_object('cube', GameObject(width = 30, height = 50))
     gui = game.get_active_scene().instant_game_object(GameObject(gui = True))
+    gui = game.get_active_scene().instant_game_object(Image(image_path='img.png', image_alpha=255, image_width=32, image_height=32, image_offset_x=50))
 
     game.run()

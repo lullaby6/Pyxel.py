@@ -89,14 +89,43 @@ class GameObject:
         return self.tags
 
 class Image(GameObject):
-    def __init__(self, image_path, image_width, image_height, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
-        super().__init__()
-        self.image_path = image_path
-        self.image_width = image_width
-        self.image_height = image_height
-        self.image_alpha = image_alpha
+    def __init__(self, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
+        super().__init__(alpha=0)
         self.image_offset_x = image_offset_x
         self.image_offset_y = image_offset_y
+        self.image_alpha = image_alpha
+        self.load_image(image_path, image_width, image_height)
+    def drawing_image(self):
+        drawingX = self.x
+        drawingY = self.y
+        if self.gui == False:
+            drawingX -= self.scene.game.camera.x
+            drawingY -= self.scene.game.camera.y
+        self.scene.game.screen.blit(self.scaled_image, (drawingX + self.image_offset_x, drawingY + self.image_offset_y, self.image_width, self.image_height))
+    def load_image(self, image_path, image_width = None, image_height = None):
+        self.image_path = image_path
+        self.image = pygame.image.load(self.image_path)
+        self.image_rect = self.image.get_rect()
+        self.image_original_width = self.image_rect[2]
+        self.image_original_height = self.image_rect[3]
+        self.set_image_size(image_width, image_height)
+        self.scaled_image.set_alpha(self.image_alpha)
+    def set_image_alpha(self, alpha):
+        self.image_alpha = alpha
+        self.scaled_image.set_alpha(self.image_alpha)
+    def set_image_size(self, image_width = None, image_height = None):
+        self.image_width = image_width
+        self.image_height = image_height
+        if self.image_width == None:
+            self.image_width = self.image_original_width
+        if self.image_height == None:
+            self.image_height = self.image_original_height
+        self.scaled_image = pygame.transform.scale(self.image, (self.image_width, self.image_height))
+    def set_image_width(self, width):
+        self.set_image_size(width=width, height=None)
+    def set_image_height(self, height):
+         self.set_image_size(width=None, height=height)
+
 
 class Text(GameObject):
     def __init__(self, text = 'Text', font_size = 10, font_color = Colors['white'], font_alpha = 255, font_family = 'Arial', text_offset_x = 0, text_offset_y = 0):
@@ -287,6 +316,10 @@ class Game:
                     game_object.update()
                 if self.pause == False:
                     game_object.drawing()
+                if hasattr(game_object, 'drawing_image') and self.pause == False:
+                    game_object.drawing_image()
+                if hasattr(game_object, 'drawing_text') and self.pause == False:
+                    game_object.drawing_text()
                 if hasattr(game_object, 'draw') and self.pause == False:
                     game_object.draw()
 
@@ -362,3 +395,6 @@ class Game:
         screenshot_file_name = f'{self.title} screenshot - {timestamp}.png'
         screenshot_file_path = os.path.join(folder_path, screenshot_file_name)
         pygame.image.save(self.screen, screenshot_file_path)
+    def set_icon(self, path):
+        self.icon_image = pygame.image.load(path)
+        pygame.display.set_icon(self.icon_image)
