@@ -22,7 +22,7 @@ class Player (GameObject):
     def __init__(self, color, x, y, width, height):
         super().__init__(x, y, width, height)
         self.color = color
-        self.alpha = 255
+        self.alpha = 128
 
     def update(self):
         self.scene.game.camera.target(self.x, self.y)

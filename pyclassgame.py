@@ -54,13 +54,13 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
+    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
         self.x = x
         self.y = y
-        self.z = z
+        # self.z = z
         self.width = width
         self.height = height
         self.color = color
@@ -153,11 +153,11 @@ class Scene:
         self.game_objects[name].scene = self
 
         # Sort game objects by z
-        sorted_game_objects_by_z_list = sorted(self.game_objects.items(), key=lambda game_object: game_object[1].z, reverse=True)
-        sorted_game_objects_by_z = {}
-        for name, game_object in sorted_game_objects_by_z_list:
-            sorted_game_objects_by_z[name] = game_object
-        self.game_objects = sorted_game_objects_by_z
+        # sorted_game_objects_by_z_list = sorted(self.game_objects.items(), key=lambda game_object: game_object[1].z, reverse=True)
+        # sorted_game_objects_by_z = {}
+        # for name, game_object in sorted_game_objects_by_z_list:
+        #     sorted_game_objects_by_z[name] = game_object
+        # self.game_objects = sorted_game_objects_by_z
 
         if hasattr(self.game_objects[name], 'load'): self.game_objects[name].load()
         return self.game_objects[name]

@@ -16,7 +16,6 @@
 - GameObject Tag
 - GameObject On Click Event
 - GameObject On Collide Event
-- GameObject Z-Index
 - Scenes
 - Scene CRUD
 - Camera
@@ -29,7 +28,6 @@
 - Images
 - Text
 - Sounds
-- Zoom
 - Lights
 - Shadow
 - Physics
@@ -42,3 +40,7 @@
 - Camera Shake
 - Mouse Enter Event
 - Mouse Leave Event
+
+## Experimental/Bugged Feactures
+- GameObject Z-Index
+- Zoom
