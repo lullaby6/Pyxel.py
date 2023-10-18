@@ -54,13 +54,13 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
         self.x = x
         self.y = y
-        # self.z = z
+        self.z = z
         self.width = width
         self.height = height
         self.color = color
@@ -87,10 +87,13 @@ class GameObject:
         return tag in self.tags
     def get_tags(self):
         return self.tags
+    def set_z(self, z):
+        self.z = z
+        self.scene.sort_game_objects_by_z()
 
 class Image(GameObject):
-    def __init__(self, x = 0, y = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
-        super().__init__(x=x, y=y, width=width, height=height, color=color, alpha=alpha, tags=tags, gui=gui)
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
+        super().__init__(x=x, y=y , z=z, width=width, height=height, color=color, alpha=alpha, tags=tags, gui=gui)
         self.image_offset_x = image_offset_x
         self.image_offset_y = image_offset_y
         self.image_alpha = image_alpha
@@ -191,14 +194,17 @@ class Scene:
         self.game_objects[name].scene = self
 
         # Sort game objects by z
-        # sorted_game_objects_by_z_list = sorted(self.game_objects.items(), key=lambda game_object: game_object[1].z, reverse=True)
-        # sorted_game_objects_by_z = {}
-        # for name, game_object in sorted_game_objects_by_z_list:
-        #     sorted_game_objects_by_z[name] = game_object
-        # self.game_objects = sorted_game_objects_by_z
+        self.sort_game_objects_by_z()
 
         if hasattr(self.game_objects[name], 'load'): self.game_objects[name].load()
         return self.game_objects[name]
+    def sort_game_objects_by_z(self):
+        game_objets_values = list(self.game_objects.values())
+        game_objets_values_sorted_by_z = sorted(game_objets_values, key=lambda game_object: game_object.z)
+        game_objets_sorted_by_z = {}
+        for game_object in game_objets_values_sorted_by_z:
+            game_objets_sorted_by_z[game_object.name] = game_object
+        self.game_objects = game_objets_sorted_by_z
     def instant_game_object(self, game_object):
         random_uuid_name = str(uuid.uuid4())
         return self.add_game_object(random_uuid_name, game_object)
