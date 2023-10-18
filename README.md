@@ -14,6 +14,7 @@
 - GameObject Alpha Color
 - GameObject GUI
 - GameObject Tag
+- GameObject On Click Event
 - Scenes
 - Scene CRUD
 - Camera
@@ -23,18 +24,20 @@
 - Screenshot
 
 ## To Do
+- Images
+- Text
+- Sounds
+- Collide
+
 - Zoom
 - Lights
 - Shadow
 - Physics
-- Collide
 - TileMaps
 - Particles
-- Images
-- Text
-- Sounds
 - GameObject Childs
 - GameObject Rotation
 - GameObject Ignore Pause
+- GameObject DontDestroyOnLoad
 - Resizable Window
 - Camera Shake
