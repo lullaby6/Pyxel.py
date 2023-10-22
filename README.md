@@ -38,6 +38,8 @@
 - GameObject Rotation
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
+- GameObject Reset
+- Scene Reset
 - Resizable Window
 - Camera Shake
 - Mouse Enter Event

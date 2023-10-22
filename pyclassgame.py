@@ -1,4 +1,4 @@
-import pygame, sys, json, uuid, datetime, os
+import pygame, sys, json, uuid, datetime, os, copy
 
 def load_json(path):
     with open(path, 'r') as f:
@@ -67,6 +67,14 @@ class GameObject:
         self.alpha = alpha
         self.tags = tags
         self.gui = gui
+        self.self_copy = copy.deepcopy(self)
+    def reset(self):
+        self.self_copy_reset = copy.deepcopy(self.self_copy)
+        self.self_copy_reset.name = self.name
+        self.self_copy_reset.scene = self.scene
+        self.__dict__.update(self.self_copy_reset.__dict__)
+
+        if hasattr(self, 'load'): self.load()
     def drawing(self):
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
@@ -127,7 +135,7 @@ class Image(GameObject):
     def set_image_width(self, width):
         self.set_image_size(width=width, height=None)
     def set_image_height(self, height):
-         self.set_image_size(width=None, height=height)
+        self.set_image_size(width=None, height=height)
     def set_image_offset(self, image_offset_x = None, image_offset_y = None):
         if image_offset_x != None:
             self.image_offset_x = image_offset_x
@@ -175,6 +183,9 @@ class Camera:
         self.zoom = zoom
         self.minZoom = minZoom
         self.maxZoom = maxZoom
+        # self.self_copy = copy.deepcopy(self)
+    def reset(self):
+        self.__dict__.update(self.self_copy.__dict__)
     def target(self, x, y):
         # self.x = x - (self.game.width / 2)
         # self.y = y - (self.game.height / 2)
@@ -188,6 +199,17 @@ class Scene:
         self.name = None
         self.game = None
         self.game_objects = {}
+        self.self_copy = copy.deepcopy(self)
+    def reset(self):
+        self.self_copy_reset = copy.deepcopy(self.self_copy)
+        self.self_copy_reset.name = self.name
+        self.self_copy_reset.game = self.game
+        self.__dict__.update(self.self_copy_reset.__dict__)
+        if hasattr(self, 'load'): self.load()
+
+        for game_object in self.game_objects.values():
+            game_object.reset()
+            if hasattr(game_object, 'load'): game_object.load()
     def add_game_object(self, name, game_object):
         self.game_objects[name] = game_object
         self.game_objects[name].name = name
@@ -214,8 +236,7 @@ class Scene:
         return self.game_objects[name]
     def get_game_objects_by_tag(self, tag):
         objects = []
-        for game_object_name in self.game_objects:
-            game_object = self.game_objects[game_object_name]
+        for game_object in self.game_objects.values():
             if game_object.has_tag(tag):
                 objects.append(game_object)
         return objects
@@ -276,8 +297,7 @@ class Game:
                     if event.key == pygame.K_ESCAPE and self.quit_on_escape:
                         self.running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    for game_object_name in game_objects:
-                        game_object = game_objects[game_object_name]
+                    for game_object in game_objects.values():
                         cursor = None
                         if game_object.gui == True:
                             cursor = ObjectPlaceholder(event.pos[0], event.pos[1], 0, 0)
@@ -291,8 +311,7 @@ class Game:
                         if hasattr(event, 'key'): key_name = pygame.key.name(event.key)
                         if hasattr(active_scene, eventName):
                             getattr(active_scene, eventName)(event, key_name)
-                        for game_object_name in game_objects:
-                            game_object = game_objects[game_object_name]
+                        for game_object in game_objects.values():
                             if hasattr(game_object, eventName) and self.pause == False:
                                 getattr(game_object, eventName)(event, key_name)
 
@@ -314,12 +333,10 @@ class Game:
             if hasattr(active_scene, 'draw') and self.pause == False:
                 active_scene.draw()
 
-            for game_object_name in game_objects:
-                game_object = game_objects[game_object_name]
+            for game_object in game_objects.values():
 
                 # Check for collisions
-                for game_object_name_2 in game_objects:
-                    game_object_2 = game_objects[game_object_name_2]
+                for game_object_2 in game_objects.values():
                     if game_object.id != game_object_2.id:
                         if game_object.gui == False and game_object_2.gui == False and is_collide(game_object, game_object_2):
                             if hasattr(game_object, 'on_collide'):
@@ -366,6 +383,8 @@ class Game:
         return self.scenes[self.active_scene]
     def remove_scene(self, name):
         del self.scenes[name]
+    def reset_scene(self):
+        self.get_active_scene().reset()
     def set_fullscreen(self, fullscreen = True):
         self.fullscreen = fullscreen
         if fullscreen == True:
@@ -398,8 +417,7 @@ class Game:
         if hasattr(active_scene, eventName) and self.pause == False:
             getattr(active_scene, eventName)()
 
-        for game_object_name in game_objects:
-            game_object = game_objects[game_object_name]
+        for game_object in game_objects.values():
             if hasattr(game_object, eventName) and self.pause == False:
                 getattr(game_object, eventName)()
     def screenshot(self, folder_path = 'screenshots'):
