@@ -17,9 +17,11 @@
 - GameObject Z-Index
 - GameObject On Click Event
 - GameObject On Collide Event
-- Images
+- GameObject Reset
 - Scenes
+- Scene Reset
 - Scene CRUD
+- Images
 - Camera
 - Camera Smooth Follow
 - Background Alpha Color
@@ -38,8 +40,6 @@
 - GameObject Rotation
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
-- GameObject Reset
-- Scene Reset
 - Resizable Window
 - Camera Shake
 - Mouse Enter Event
