@@ -1,5 +1,7 @@
 # pyclassgame
 
+pyclassgame is a library that adds functionality and structure to pygame, you can still use all your pygame code but remove a lot of boilerplate code.
+
 # Index
 - [Game](#game)
     - [Default Props](#default-props)
@@ -36,6 +38,7 @@
     - [Z-Index](#z-index)
 - [Image](#Image)
 - [Text](#Text)
+- [Sound](#Text)
 - [Events](#Events)
     - [All Events](#all-events)
     - [Extra Events](#extra-events)
