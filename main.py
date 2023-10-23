@@ -18,7 +18,7 @@ class MainScene (Scene):
     def update(self):
         cube = self.get_game_object('cube')
         cube.x += 0.25
-    
+
     def key_down(self, event, key_name):
         # print(event.key, key_name)
         if key_name == 'f': self.game.toggle_fullscreen()

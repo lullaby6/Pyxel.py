@@ -280,7 +280,8 @@ class Game:
         self.running = True
         while self.running:
             active_scene = self.get_active_scene()
-            game_objects = active_scene.game_objects
+            game_objects = active_scene.game_objects.values()
+
             self.pygame_events = {
                 'key_down': pygame.KEYDOWN,
                 'key_up': pygame.KEYUP,
@@ -305,7 +306,7 @@ class Game:
                     if event.key == pygame.K_ESCAPE and self.quit_on_escape:
                         self.running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    for game_object in game_objects.values():
+                    for game_object in game_objects:
                         cursor = None
                         if game_object.gui == True:
                             cursor = ObjectPlaceholder(event.pos[0], event.pos[1], 0, 0)
@@ -319,7 +320,7 @@ class Game:
                         if hasattr(event, 'key'): key_name = pygame.key.name(event.key)
                         if hasattr(active_scene, eventName):
                             getattr(active_scene, eventName)(event, key_name)
-                        for game_object in game_objects.values():
+                        for game_object in game_objects:
                             if hasattr(game_object, eventName) and game_object.active == True and ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
                                 getattr(game_object, eventName)(event, key_name)
 
@@ -336,15 +337,17 @@ class Game:
             self.bg_surface.fill(self.bg_color)
             self.screen.blit(self.bg_surface, (0, 0))
 
-            if hasattr(active_scene, 'update') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
-                active_scene.update()
-            if hasattr(active_scene, 'draw') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
-                active_scene.draw()
+            if ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
+                if hasattr(active_scene, 'update'):
+                    active_scene.update()
+                if hasattr(active_scene, 'draw'):
+                    active_scene.draw()
 
-            for game_object in game_objects.values():
+            for game_object in game_objects:
                 if game_object.active == True:
                     if ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
-                        for game_object_2 in game_objects.values():
+                        # Check collision
+                        for game_object_2 in game_objects:
                             if game_object_2.active == True:
                                 if game_object.id != game_object_2.id and game_object.gui == False and game_object_2.gui == False and is_collide(game_object, game_object_2):
                                     if hasattr(game_object, 'on_collide'):
@@ -354,6 +357,7 @@ class Game:
 
                         if hasattr(game_object, 'update'):
                             game_object.update()
+
                     if game_object.visible == True:
                         game_object.drawing()
                         if hasattr(game_object, 'drawing_image'):
