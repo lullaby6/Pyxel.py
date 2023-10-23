@@ -242,7 +242,7 @@ class Scene:
         return objects
 
 class Game:
-    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', fps = 60, quit_on_escape = False, default_scene = Scene()):
+    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', cursor = True, fps = 60, quit_on_escape = False, default_scene = Scene()):
         pygame.init()
         self.set_title(title)
         self.width = width
@@ -254,6 +254,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.fps = fps
         self.prev_time = pygame.time.get_ticks()
+
+        self.set_cursor_visibility(cursor)
 
         self.scenes = {}
         self.active_scene = None
@@ -406,9 +408,16 @@ class Game:
         self.clock = pygame.time.Clock()
     def set_cursor(self, cursor):
         pygame.mouse.set_cursor(cursor)
+    def set_cursor_visibility(self, visibility):
+        self.cusor = visibility
+        pygame.mouse.set_visible(visibility)
+    def toggle_cursor_visibility(self):
+        self.set_cursor_visibility(not self.cursor)
     def hidde_cursor(self):
+        self.cursor = False
         pygame.mouse.set_visible(False)
     def show_cursor(self):
+        self.cursor = True
         pygame.mouse.set_visible(True)
     def custom_event(self, eventName):
         active_scene = self.get_active_scene()

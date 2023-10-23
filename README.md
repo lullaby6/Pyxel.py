@@ -35,6 +35,21 @@ game.set_fullscreen(False) #can be True or False, by default is True
 game.toggle_fullscreen()
 ```
 
+## FPS Managment
+```python
+print(game.fps)
+game.set_fps(30)
+```
+
+## Cursor visibility Managment
+```python
+print(self.cursor)
+game.set_cursor_visibility(False) #can be True or False, by default is True
+game.toggle_cursor_visibility()
+game.hidde_cursor()
+game.show_cursor()
+```
+
 # Scenes
 
 # Creating a scene
