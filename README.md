@@ -18,9 +18,21 @@ game = Game()
 game.run()
 ```
 
+## Set title
+```python
+game.set_title('My Game Title')
+```
+
 ## Set icon
 ```python
 game.set_icon('icon.png')
+```
+
+## Fullscreen Managment
+```python
+print(game.fullscreen)
+game.set_fullscreen(True) #can be True or False, default is True
+game.toggle_fullscreen()
 ```
 
 # Scenes
