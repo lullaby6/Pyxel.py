@@ -2,6 +2,7 @@
 
 # Index
 - [Game](#game)
+    - [Icon](##seticon)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 
@@ -15,6 +16,11 @@ from pyclassgame import Game
 game = Game()
 
 game.run()
+```
+
+## Set icon
+```python
+game.set_icon('icon.png')
 ```
 
 # Scenes
