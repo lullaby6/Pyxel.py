@@ -8,12 +8,14 @@
     - [Size](#size)
     - [Background Color](#background-color)
     - [Background Color Alpha](#background-color-alpha)
+    - [Pause](#pause)
     - [Fullscreen](#Fulscreen)
     - [FPS](#fps)
     - [Cursor](#cursor-visibility)
     - [Delta Time](#delta-time)
     - [Screenshot](#screenshot)
     - [Quit on Escape](#quit-on-escape)
+    - [Custom Event](#custom-event)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 - [Camera](#camera)
@@ -39,12 +41,14 @@ game = Game(width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 25
 ```
 
 ## Title
+
 ```python
 print(self.title)
 game.set_title('My Game Title')
 ```
 
 ## Icon
+
 ```python
 game.set_icon('icon.png')
 print(self.icon_path) # icon file path
@@ -52,22 +56,36 @@ print(self.icon_image) # icon pygame.image
 ```
 
 ## Size
+
 ```python
 print(game.width, game.height)
 game.set_size(1280, 720)
 ```
 
 ## Background Color
+
 ```python
 game.bg_color = (123, 255, 100) # default is (255, 255, 255) (white)
 ```
 
 ## Background Color Alpha
+
 ```python
 game.bg_alpha = 128 # default is 255
 ```
 
+## Pause
+
+All update, drawing and event functions will be paused, except Scene events.
+
+```python
+print(game.pause)
+game.set_pause(Trye) # can be True or False, by default is False
+game.toggle_pause()
+```
+
 ## Fullscreen
+
 ```python
 print(game.fullscreen)
 game.set_fullscreen(False) # can be True or False, by default is True
@@ -75,12 +93,14 @@ game.toggle_fullscreen()
 ```
 
 ## FPS
+
 ```python
 print(game.fps)
 game.set_fps(30)
 ```
 
 ## Cursor visibility
+
 ```python
 print(self.cursor)
 game.set_cursor_visibility(False) # can be True or False, by default is True
@@ -90,11 +110,13 @@ game.show_cursor()
 ```
 
 ## Delta Time
+
 ```python
 print(game.delta_time)
 ```
 
 ## Screenshot
+
 ```python
 game.screenshot() # default screenshots directory is 'screenshots/'
 game.screenshot('my_screenshots')
@@ -102,8 +124,21 @@ game.screenshot(os.path.join(__file__, 'my_screenshots'))
 ```
 
 ## Quit on Escape
+
 ```python
 game.quit_on_escape = True # can be True or False, by default is False
+```
+
+## Custom Event
+
+The 'my_custom_event' function is executed for the current scene and all objects.
+
+```python
+game.custom_event('print_name', 'Lullaby')
+
+class Player (GameObject):
+    def print_name(self, name):
+        print(f'My name is: {name}')
 ```
 
 # Scenes

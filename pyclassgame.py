@@ -421,16 +421,16 @@ class Game:
     def show_cursor(self):
         self.cursor = True
         pygame.mouse.set_visible(True)
-    def custom_event(self, eventName):
+    def custom_event(self, eventName, prop = None):
         active_scene = self.get_active_scene()
         game_objects = active_scene.game_objects
 
         if hasattr(active_scene, eventName) and self.pause == False:
-            getattr(active_scene, eventName)()
+            getattr(active_scene, eventName)(prop)
 
         for game_object in game_objects.values():
             if hasattr(game_object, eventName) and self.pause == False:
-                getattr(game_object, eventName)()
+                getattr(game_object, eventName)(prop)
     def screenshot(self, folder_path = 'screenshots'):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
