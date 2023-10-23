@@ -5,6 +5,8 @@ class MainScene (Scene):
         super().__init__()
 
     def load(self):
+        # self.ignore_pause = True
+
         self.game.camera.x = -50
         self.game.camera.y = -50
 
@@ -13,6 +15,10 @@ class MainScene (Scene):
         gui = self.instant_game_object(GameObject(gui = True))
         self.instant_game_object(Image(image_path='img.png', image_alpha=255, image_width=32, image_height=32, x=100, y=250))
 
+    def update(self):
+        cube = self.get_game_object('cube')
+        cube.x += 0.25
+    
     def key_down(self, event, key_name):
         # print(event.key, key_name)
         if key_name == 'f': self.game.toggle_fullscreen()
@@ -22,18 +28,25 @@ class MainScene (Scene):
         elif key_name == 'x': self.game.camera.set_zoom(1.0)
         elif key_name == 'c': self.game.camera.set_zoom(1.5)
         elif key_name == 'r': self.reset()
+        elif key_name == 'm':
+            cube = self.get_game_object('cube')
+            cube.active = False
 
 class Player (GameObject):
     def __init__(self, color, x, y, z, width, height):
         super().__init__(x=x, y=y, z=z, width=width, height=height, color=color)
+    def load(self):
+        self.ignore_pause = True
+        pass
     def update(self):
         self.scene.game.camera.target(self.x, self.y)
-        # cube = self.scene.get_game_object('cube')
+        # print('xd', self.x, self.y)
         pass
     def on_click(self, event):
         print('omg')
     def on_collide(self, other):
         print('collide!!!!!!!!!!!!')
+
 
     def key_down(self, event, keyname):
         if keyname == 'w': self.y -= 10

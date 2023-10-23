@@ -194,5 +194,5 @@ game.run()
 ```python
 MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False)
 
-game.scene.instant_game_object(MyObject)
+game.get_active_scene().instant_game_object(MyObject)
 ```

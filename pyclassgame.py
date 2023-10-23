@@ -54,7 +54,7 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False):
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False, active = True, visible = True):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
@@ -68,6 +68,8 @@ class GameObject:
         self.tags = tags
         self.gui = gui
         self.ignore_pause = ignore_pause
+        self.active = active
+        self.visible = visible
         self.self_copy = copy.deepcopy(self)
     def reset(self):
         self.self_copy_reset = copy.deepcopy(self.self_copy)
@@ -196,10 +198,11 @@ class Camera:
         self.zoom = max(self.minZoom, min(self.maxZoom, zoom))
 
 class Scene:
-    def __init__(self):
+    def __init__(self, ignore_pause = False):
         self.name = None
         self.game = None
         self.game_objects = {}
+        self.ignore_pause = ignore_pause
         self.self_copy = copy.deepcopy(self)
     def reset(self):
         self.self_copy_reset = copy.deepcopy(self.self_copy)
@@ -308,7 +311,7 @@ class Game:
                             cursor = ObjectPlaceholder(event.pos[0], event.pos[1], 0, 0)
                         else:
                             cursor = ObjectPlaceholder(event.pos[0] + self.camera.x, event.pos[1] + self.camera.y, 0, 0)
-                        if is_inside(cursor, game_object) and hasattr(game_object, 'on_click'):
+                        if is_inside(cursor, game_object) and hasattr(game_object, 'on_click') and game_object.active == True and ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
                             getattr(game_object, 'on_click')(event)
                 for eventName in self.pygame_events:
                     if event.type == self.pygame_events[eventName]:
@@ -317,7 +320,7 @@ class Game:
                         if hasattr(active_scene, eventName):
                             getattr(active_scene, eventName)(event, key_name)
                         for game_object in game_objects.values():
-                            if hasattr(game_object, eventName) and self.pause == False:
+                            if hasattr(game_object, eventName) and game_object.active == True and ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
                                 getattr(game_object, eventName)(event, key_name)
 
             current_time = pygame.time.get_ticks()
@@ -327,38 +330,38 @@ class Game:
             if self.camera.zoom != 1.0:
                 self.screen.fill(self.bg_color)
 
-            if(self.pause == False):
-                self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-                self.bg_surface.set_alpha(self.bg_alpha)
-                self.bg_surface.fill(self.bg_color)
-                self.screen.blit(self.bg_surface, (0, 0))
+            # if(self.pause == False):
+            self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            self.bg_surface.set_alpha(self.bg_alpha)
+            self.bg_surface.fill(self.bg_color)
+            self.screen.blit(self.bg_surface, (0, 0))
 
-            if hasattr(active_scene, 'update') and self.pause == False:
+            if hasattr(active_scene, 'update') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
                 active_scene.update()
-            if hasattr(active_scene, 'draw') and self.pause == False:
+            if hasattr(active_scene, 'draw') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
                 active_scene.draw()
 
             for game_object in game_objects.values():
+                if game_object.active == True:
+                    if ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
+                        for game_object_2 in game_objects.values():
+                            if game_object_2.active == True:
+                                if game_object.id != game_object_2.id and game_object.gui == False and game_object_2.gui == False and is_collide(game_object, game_object_2):
+                                    if hasattr(game_object, 'on_collide'):
+                                        game_object.on_collide(game_object_2)
+                                    if hasattr(game_object_2, 'on_collide') and ((game_object_2.ignore_pause == True and self.pause == True) or (self.pause == False)):
+                                        game_object_2.on_collide(game_object)
 
-                # Check for collisions
-                for game_object_2 in game_objects.values():
-                    if game_object.id != game_object_2.id:
-                        if game_object.gui == False and game_object_2.gui == False and is_collide(game_object, game_object_2):
-                            if hasattr(game_object, 'on_collide'):
-                                game_object.on_collide(game_object_2)
-                            if hasattr(game_object_2, 'on_collide'):
-                                game_object_2.on_collide(game_object)
-
-                if hasattr(game_object, 'update') and self.pause == False:
-                    game_object.update()
-                if self.pause == False:
-                    game_object.drawing()
-                if hasattr(game_object, 'drawing_image') and self.pause == False:
-                    game_object.drawing_image()
-                if hasattr(game_object, 'drawing_text') and self.pause == False:
-                    game_object.drawing_text()
-                if hasattr(game_object, 'draw') and self.pause == False:
-                    game_object.draw()
+                        if hasattr(game_object, 'update'):
+                            game_object.update()
+                    if game_object.visible == True:
+                        game_object.drawing()
+                        if hasattr(game_object, 'drawing_image'):
+                            game_object.drawing_image()
+                        if hasattr(game_object, 'drawing_text'):
+                            game_object.drawing_text()
+                        if hasattr(game_object, 'draw'):
+                            game_object.draw()
 
             # Draw the zoomed screen
             if self.camera.zoom != 1.0:
@@ -404,6 +407,14 @@ class Game:
         self.screen = pygame.display.set_mode((self.width, self.height))
     def set_pause(self, pause):
         self.pause = pause
+        active_scene = self.get_active_scene()
+        game_objects = active_scene.game_objects.values()
+
+        if hasattr(active_scene, 'on_pause') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
+            active_scene.on_pause(self.pause)
+        for game_object in game_objects:
+            if hasattr(game_object, 'on_pause') and ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
+                game_object.on_pause(self.pause)
     def toggle_pause(self):
         self.set_pause(not self.pause)
     def set_fps(self, fps):
@@ -424,13 +435,13 @@ class Game:
         pygame.mouse.set_visible(True)
     def custom_event(self, eventName, prop = None):
         active_scene = self.get_active_scene()
-        game_objects = active_scene.game_objects
+        game_objects = active_scene.game_objects.values()
 
-        if hasattr(active_scene, eventName) and self.pause == False:
+        if hasattr(active_scene, eventName) and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
             getattr(active_scene, eventName)(prop)
 
-        for game_object in game_objects.values():
-            if hasattr(game_object, eventName) and self.pause == False:
+        for game_object in game_objects:
+            if hasattr(game_object, eventName) and ((game_object.ignore_pause == True and self.pause == True) or (self.pause == False)):
                 getattr(game_object, eventName)(prop)
     def screenshot(self, folder_path = 'screenshots'):
         if not os.path.exists(folder_path):

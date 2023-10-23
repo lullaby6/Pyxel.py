@@ -18,9 +18,15 @@
 - GameObject On Click Event
 - GameObject On Collide Event
 - GameObject Reset
+- GameObject On Pause
+- GameObject Active
+- GameObject Visible
+- GameObject Ignore Pause
 - Scenes
 - Scene Reset
 - Scene CRUD
+- Scene On Pause
+- Scene Ignore Pause
 - Images
 - Camera
 - Camera Smooth Follow
@@ -40,8 +46,6 @@
 - GameObject Rotation
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
-- GameObject Active
-- GameObject Visible
 - Resizable Window
 - Camera Shake
 - Mouse Enter Event
