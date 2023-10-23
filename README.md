@@ -3,7 +3,7 @@
 # Index
 - [Game](#game)
 - [Scenes](#installation)
-- [GameObject](#game-object)
+- [GameObject](#gameobject)
 
 # Game
 
@@ -16,5 +16,22 @@ game.run()
 ```
 
 # Scenes
+
+```python
+from pyclassgame import Game, Scene
+
+class MainScene (Scene):
+    def __init__(self):
+        super().__init__()
+
+    def load(self):
+        print('main scene loaded!')
+
+game = Game()
+
+game.set_scene('main', MainScene())
+
+game.run()
+```
 
 # GameObject
