@@ -4,10 +4,15 @@
 - [Game](#game)
     - [Title](#title)
     - [Icon](#icon)
+    - [Size](#size)
+    - [Background Color](#background-color)
+    - [Background Color Alpha](#background-color-alpha)
     - [Fullscreen](#Fulscreen)
     - [FPS](#fps)
     - [Cursor](#cursor-visibility)
-    - [Screenshit](#screenshot)
+    - [Delta Time](#delta-time)
+    - [Screenshot](#screenshot)
+    - [Quit on Escape](#quit-on-escape)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 
@@ -36,6 +41,22 @@ print(self.icon_path) # icon file path
 print(self.icon_image) # icon pygame.image
 ```
 
+## Size
+```python
+print(game.width, game.height)
+game.set_size(1280, 720)
+```
+
+## Background Color
+```python
+game.bg_color = (123, 255, 100) # default is (255, 255, 255) (white)
+```
+
+## Background Color Alpha
+```python
+game.bg_alpha = 128 # default is 255
+```
+
 ## Fullscreen
 ```python
 print(game.fullscreen)
@@ -58,11 +79,21 @@ game.hidde_cursor()
 game.show_cursor()
 ```
 
+## Delta Time
+```python
+print(game.delta_time)
+```
+
 ## Screenshot
 ```python
 game.screenshot() # default screenshots directory is 'screenshots/'
 game.screenshot('my_screenshots')
 game.screenshot(os.path.join(__file__, 'my_screenshots'))
+```
+
+## Quit on Escape
+```python
+game.quit_on_escape = True # can be True or False, by default is False
 ```
 
 # Scenes
