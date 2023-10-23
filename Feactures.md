@@ -44,7 +44,6 @@
 - TileMaps
 - Particles
 - GameObject Rotation
-- GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
 - Resizable Window
 - Camera Shake

@@ -19,6 +19,9 @@
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
     - [Default Props](#default-props-3)
+    - [Methods](#scene-methods)
+    - [Reset](#reset-scene)
+    - [Ignore Pause](#scene-ignore-pause)
 - [Image](#Image)
 - [Text](#Text)
 - [Camera](#camera)
@@ -164,9 +167,57 @@ game.set_scene('main', MainScene())
 game.run()
 ```
 
+## Scene Methods
+
+```python
+my_scene = Scene() # instancing a base scene
+game.add_scene('scene_name', my_scene) # add scene to game.scenes
+game.change_scene('scene_name') # change the active/current scene
+game.set_scene('scene_name', my_scene) # a shortcut for add_scene and change_scene
+game.get_active_scene()
+game.remove_scene('scene_name') # delete a scene
+game.reset_scene() # reset current scene
+```
+
+## Default Props 2
+
+```python
+my_scene = Scene(ignore_pause = False)
+```
+
+## Reset Scene
+
+```python
+active_scene = game.get_active_scene()
+active_scene.reset()
+```
+
+## Sort Game Objects by Z-Index
+
+This function will be executed automatically when a GameObject is created.
+
+```python
+active_scene = game.get_active_scene()
+active_scene.sort_game_objects_by_z()
+```
+
+## Scene Ignore Pause
+
+```python
+my_scene = Scene(ignore_pause = True)
+```
+
+or
+
+```python
+class MainScene (Scene):
+    def load(self):
+        self.ignore_pause = True
+```
+
 # GameObject
 
-## Creating a simple GameObject
+## Creating a GameObject
 
 ```python
 from pyclassgame import Game, Scene, GameObject
@@ -192,7 +243,7 @@ game.run()
 ## Default props <span style="color: transparent; opacity: 0; display: none;">3</span>
 
 ```python
-MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False)
+MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False, active = True, visible = True)
 
 game.get_active_scene().instant_game_object(MyObject)
 ```
