@@ -18,7 +18,7 @@
     - [Custom Event](#custom-event)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
-    - [Default Props](#default-props-2)
+    - [Default Props](#default-props-3)
 - [Image](#Image)
 - [Text](#Text)
 - [Camera](#camera)
@@ -189,7 +189,7 @@ game.set_scene('main', MainScene())
 game.run()
 ```
 
-## Default props
+## Default props 3
 
 ```python
 MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False)
