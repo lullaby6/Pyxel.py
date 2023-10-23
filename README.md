@@ -80,7 +80,7 @@ All update, drawing and event functions will be paused, except Scene events.
 
 ```python
 print(game.pause)
-game.set_pause(Trye) # can be True or False, by default is False
+game.set_pause(True) # can be True or False, by default is False
 game.toggle_pause()
 ```
 
