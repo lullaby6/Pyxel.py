@@ -379,3 +379,29 @@ player.ignore_pause = True # by default is False
 print(player.z)
 player.set_z(10)
 ```
+
+# Events
+
+## All events
+
+- ```key_down```
+- ```key_up```
+- ```mouse_down```
+- ```mouse_up```
+- ```mouse_motion```
+- ```mouse_wheel```
+- ```joy_axis_motion```
+- ```joy_button_down```
+- ```joy_button_up```
+- ```quit```
+- ```fullscreen```
+- ```resize```
+- ```expose```
+- ```focus```
+
+## Exmaple
+```python
+class MainScene (Scene):
+    def key_down(self, event, key_name):
+        if key_name == 'p': self.game.toggle_pause()
+```
