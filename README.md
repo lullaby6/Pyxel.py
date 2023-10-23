@@ -45,6 +45,8 @@
 - [Colors](#Colors)
 - [Functions](#functions)
 
+<br>
+
 # Game
 
 ## Initializating game
@@ -166,6 +168,8 @@ class Player (GameObject):
         print(f'My name is: {name}')
 ```
 
+<br>
+
 # Scenes
 
 ## Creating a scene
@@ -248,6 +252,8 @@ class MyScene (Scene):
 
 my_scene = MyScene()
 ```
+
+<br>
 
 # GameObject
 
