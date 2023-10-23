@@ -1,5 +1,6 @@
 # pyclassgame
 
+# Index
 - [Game](#game)
 - [Scenes](#installation)
 - [GameObject](#game-object)
