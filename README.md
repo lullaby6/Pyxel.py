@@ -289,7 +289,7 @@ class MyGameObject (GameObject):
         super().__init__()
 
     def load(self):
-        print('my-gameobject loaded!')
+        print(self.id, 'my-gameobject loaded!')
 
     def update(self)
         print(self.name, 'my-gameobject scene loop.', self.game.delta_time)
