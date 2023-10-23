@@ -1,21 +1,18 @@
 # pyclassgame
 
-<!--
-## Table of Contents
+<!--## Table of Contents
 - [Game](#game)
 - [Scenes](#installation)
-- [GameObject](#game-object)
--->
+- [GameObject](#game-object) -->
 
 # Game
 
 ```python
 from pyclassgame import Game
 
-if __name__ == "__main__":
-    game = Game()
+game = Game()
 
-    game.run()
+game.run()
 ```
 
 # Scenes
