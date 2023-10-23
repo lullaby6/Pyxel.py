@@ -32,7 +32,7 @@
     - [Tags](#tags)
     - [Visible](#visible)
     - [Active](#active)
-    - [Ignore Pause](#ignore-pause)
+    - [Ignore Pause](#gameobject-ignore-pause)
     - [Z-Index](#z-index)
 - [Image](#Image)
 - [Text](#Text)
@@ -367,7 +367,7 @@ player.visible = False # by default is True
 player.active = False # by default is True
 ```
 
-## Ignore Pause
+## GameObject ignore pause
 
 ```python
 player.ignore_pause = True # by default is False
