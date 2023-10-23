@@ -104,9 +104,6 @@ game.quit_on_escape = True # can be True or False, by default is False
 from pyclassgame import Game, Scene
 
 class MainScene (Scene):
-    def __init__(self):
-        super().__init__()
-
     def load(self):
         print('main scene loaded!')
 
@@ -125,9 +122,6 @@ game.run()
 from pyclassgame import Game, Scene, GameObject
 
 class Player (GameObject):
-    def __init__(self):
-        super().__init__()
-
     def key_down(self, event, keyname):
         if keyname == 'w': self.y -= 10
         if keyname == 'a': self.x -= 10
