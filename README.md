@@ -384,6 +384,8 @@ print(player.z)
 player.set_z(10)
 ```
 
+<br>
+
 # Events
 
 ## All events
