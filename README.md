@@ -25,6 +25,7 @@
     - [Default Props](#gameobject-default-props)
 - [Image](#Image)
 - [Text](#Text)
+- [Events](#Events)
 - [Camera](#camera)
 - [Colors](#Colors)
 - [Functions](#functions)
@@ -187,6 +188,20 @@ game.reset_scene() # reset current scene
 my_scene = Scene(ignore_pause = False)
 ```
 
+## Extend Scene class
+
+```python
+class MainScene (Scene):
+    def __init__(self):
+        super().__init__()
+
+    def load(self):
+        print('main scene loaded!')
+
+    def update(self)
+        print('main scene loop.', self.game.delta_time)
+```
+
 ## Reset scene
 
 ```python
@@ -263,6 +278,20 @@ active_scene.remove_game_object('player') # remove GameObject by name
 player = active_scene.get_game_object('player')
 ```
 
+## Extend GameObject class
+
+```python
+class MyGameObject (GameObject):
+    def __init__(self):
+        super().__init__()
+
+    def load(self):
+        print('my-gameobject loaded!')
+
+    def update(self)
+        print(self.name, 'my-gameobject scene loop.', self.game.delta_time)
+```
+
 ## GameObject size
 
 ```
@@ -313,6 +342,24 @@ if player.has_tag('player'):
     print(player, 'is a player!')
 
 print(player.get_tags())
+```
+
+## Visible
+
+```python
+player.visible = False # by default is True
+```
+
+## Active
+
+```python
+player.active = False # by default is True
+```
+
+## Ignore Pause
+
+```python
+player.ignore_pause = True # by default is False
 ```
 
 ## Z-Index
