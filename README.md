@@ -131,7 +131,7 @@ game.quit_on_escape = True # can be True or False, by default is False
 
 ## Custom Event
 
-The 'my_custom_event' function is executed for the current scene and all objects.
+The 'print_name' function is executed for the current scene and all game objects actives.
 
 ```python
 game.custom_event('print_name', 'Lullaby')

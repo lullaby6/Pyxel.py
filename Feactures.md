@@ -40,6 +40,7 @@
 - GameObject Rotation
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
+- GameObject Active
 - Resizable Window
 - Camera Shake
 - Mouse Enter Event
