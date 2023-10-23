@@ -2,6 +2,7 @@
 
 # Index
 - [Game](#game)
+    - [Default Props](#default-props)
     - [Title](#title)
     - [Icon](#icon)
     - [Size](#size)
@@ -26,6 +27,12 @@ from pyclassgame import Game
 game = Game()
 
 game.run()
+```
+
+## Default props
+
+```python
+game = Game(width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', cursor = True, fps = 60, quit_on_escape = False, default_scene = Scene())
 ```
 
 ## Title

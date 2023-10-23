@@ -210,6 +210,8 @@ class Scene:
         for game_object in self.game_objects.values():
             game_object.reset()
             if hasattr(game_object, 'load'): game_object.load()
+
+        self.sort_game_objects_by_z()
     def add_game_object(self, name, game_object):
         self.game_objects[name] = game_object
         self.game_objects[name].name = name
