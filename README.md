@@ -7,6 +7,7 @@
     - [Fullscreen](#Fulscreen)
     - [FPS](#fps)
     - [Cursor](#cursor-visibility)
+    - [Screenshit](#screenshot)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 
@@ -38,7 +39,7 @@ print(self.icon_image) # icon pygame.image
 ## Fullscreen
 ```python
 print(game.fullscreen)
-game.set_fullscreen(False) #can be True or False, by default is True
+game.set_fullscreen(False) # can be True or False, by default is True
 game.toggle_fullscreen()
 ```
 
@@ -51,10 +52,17 @@ game.set_fps(30)
 ## Cursor visibility
 ```python
 print(self.cursor)
-game.set_cursor_visibility(False) #can be True or False, by default is True
+game.set_cursor_visibility(False) # can be True or False, by default is True
 game.toggle_cursor_visibility()
 game.hidde_cursor()
 game.show_cursor()
+```
+
+## Screenshot
+```python
+game.screenshot() # default screenshots directory is 'screenshots/'
+game.screenshot('my_screenshots')
+game.screenshot(os.path.join(__file__, 'my_screenshots'))
 ```
 
 # Scenes
