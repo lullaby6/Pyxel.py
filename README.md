@@ -37,6 +37,10 @@
 - [Image](#Image)
 - [Text](#Text)
 - [Events](#Events)
+    - [All Events](#all-events)
+    - [Extra Events](#extra-events)
+    - [GameObject Events](#gameobject-exclusive-events)
+    - [Example](#event-example)
 - [Camera](#camera)
 - [Colors](#Colors)
 - [Functions](#functions)
@@ -409,7 +413,7 @@ Events for Scenes and GameObjects.
 - ```on_collide```
 - ```on_click```
 
-## Exmaple
+## Event Example
 
 ```python
 class MainScene (Scene):
