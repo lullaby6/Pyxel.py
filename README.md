@@ -2,7 +2,7 @@
 
 # Index
 - [Game](#game)
-    - [Icon](##set-icon)
+    - [Icon](#set-icon)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 
