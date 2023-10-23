@@ -131,6 +131,8 @@ game.quit_on_escape = True # can be True or False, by default is False
 
 ## Custom Event
 
+### Example
+
 The 'print_name' function is executed for the current scene and all game objects actives.
 
 ```python
