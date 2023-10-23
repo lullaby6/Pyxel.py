@@ -28,6 +28,9 @@ pyclassgame is a library that adds functionality and structure to pygame, you ca
     - [Default Props](#gameobject-default-props)
     - [Methods](#gameobject-methods)
     - [Extend](#extend-gameobject-class)
+    - [Coords](#coordinates)
+    - [Color](#color)
+    - [Alpha Color](#aplha-color)
     - [Size](#gameobject-size)
     - [GUI](#gui)
     - [Reset](#gameobject-reset)
@@ -316,9 +319,47 @@ class MyGameObject (GameObject):
         print(self.name, 'my-gameobject scene loop.', self.game.delta_time)
 ```
 
+## Coordinates
+
+```python
+player = GameObject(x=0, y=0, z=0)
+```
+
+or
+
+```python
+player.x = 25
+player.y = 25
+player.set_z(1)
+```
+
+## Color
+
+```python
+player = GameObject(color=(255, 255, 255))
+```
+
+or
+
+```python
+player.color = Colors['red']
+```
+
+## Alpha color
+
+```python
+player = GameObject(aplha=128)
+```
+
+or
+
+```python
+player.alpha = 128
+```
+
 ## GameObject size
 
-```
+```python
 player = GameObject(width=25, height=25)
 ```
 
