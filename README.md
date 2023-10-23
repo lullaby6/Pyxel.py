@@ -129,9 +129,6 @@ class Player (GameObject):
         if keyname == 'd': self.x += 10
 
 class MainScene (Scene):
-    def __init__(self):
-        super().__init__()
-
     def load(self):
         self.add_game_object('player', Player())
 
