@@ -2,7 +2,11 @@
 
 # Index
 - [Game](#game)
-    - [Icon](#set-icon)
+    - [Title](#title)
+    - [Icon](#icon)
+    - [Fullscreen](#Fulscreen)
+    - [FPS](#fps)
+    - [Cursor](#cursor-visibility)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
 
@@ -18,30 +22,33 @@ game = Game()
 game.run()
 ```
 
-## Set title
+## Title
 ```python
+print(self.title)
 game.set_title('My Game Title')
 ```
 
-## Set icon
+## Icon
 ```python
 game.set_icon('icon.png')
+print(self.icon_path) # icon file path
+print(self.icon_image) # icon pygame.image
 ```
 
-## Fullscreen Managment
+## Fullscreen
 ```python
 print(game.fullscreen)
 game.set_fullscreen(False) #can be True or False, by default is True
 game.toggle_fullscreen()
 ```
 
-## FPS Managment
+## FPS
 ```python
 print(game.fps)
 game.set_fps(30)
 ```
 
-## Cursor visibility Managment
+## Cursor visibility
 ```python
 print(self.cursor)
 game.set_cursor_visibility(False) #can be True or False, by default is True

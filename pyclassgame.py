@@ -438,5 +438,6 @@ class Game:
         screenshot_file_path = os.path.join(folder_path, screenshot_file_name)
         pygame.image.save(self.screen, screenshot_file_path)
     def set_icon(self, path):
+        self.icon_path = path
         self.icon_image = pygame.image.load(path)
         pygame.display.set_icon(self.icon_image)
