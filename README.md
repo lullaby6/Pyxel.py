@@ -17,12 +17,12 @@
     - [Quit on Escape](#quit-on-escape)
     - [Custom Event](#custom-event)
 - [Scenes](#scenes)
-    - [Default Props](#default-props-2)
+    - [Default Props](#scene-default-props)
     - [Methods](#scene-methods)
     - [Reset](#reset-scene)
     - [Ignore Pause](#scene-ignore-pause)
 - [GameObject](#gameobject)
-    - [Default Props](#default-props-3)
+    - [Default Props](#gameobject-default-props)
 - [Image](#Image)
 - [Text](#Text)
 - [Camera](#camera)
@@ -168,7 +168,7 @@ game.set_scene('main', MainScene())
 game.run()
 ```
 
-## Scene Methods
+## Scene methods
 
 ```python
 my_scene = Scene() # instancing a base scene
@@ -180,13 +180,13 @@ game.remove_scene('scene_name') # delete a scene
 game.reset_scene() # reset current scene
 ```
 
-## Default Props 2
+## Scene default props
 
 ```python
 my_scene = Scene(ignore_pause = False)
 ```
 
-## Reset Scene
+## Reset scene
 
 ```python
 active_scene = game.get_active_scene()
@@ -202,7 +202,7 @@ active_scene = game.get_active_scene()
 active_scene.sort_game_objects_by_z()
 ```
 
-## Scene Ignore Pause
+## Scene ignore pause
 
 ```python
 my_scene = Scene(ignore_pause = True)
@@ -241,7 +241,7 @@ game.set_scene('main', MainScene())
 game.run()
 ```
 
-## Default props <span style="color: transparent; opacity: 0; display: none;">3</span>
+## GameObject Default props
 
 ```python
 MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False, active = True, visible = True)
