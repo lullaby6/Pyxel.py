@@ -31,7 +31,7 @@ game.set_icon('icon.png')
 ## Fullscreen Managment
 ```python
 print(game.fullscreen)
-game.set_fullscreen(False) #can be True or False, default is True
+game.set_fullscreen(False) #can be True or False, by default is True
 game.toggle_fullscreen()
 ```
 
