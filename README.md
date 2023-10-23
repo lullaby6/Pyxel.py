@@ -1,9 +1,8 @@
 # pyclassgame
 
-<!--## Table of Contents
 - [Game](#game)
 - [Scenes](#installation)
-- [GameObject](#game-object) -->
+- [GameObject](#game-object)
 
 # Game
 
