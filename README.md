@@ -18,7 +18,7 @@
     - [Custom Event](#custom-event)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
-    - [Default Props](##default-props)
+    - [Default Props](#default-props-2)
 - [Image](#Image)
 - [Text](#Text)
 - [Camera](#camera)
