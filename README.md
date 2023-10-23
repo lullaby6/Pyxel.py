@@ -172,6 +172,7 @@ game.run()
 
 ```python
 my_scene = Scene() # instancing a base scene
+
 game.add_scene('scene_name', my_scene) # add scene to game.scenes
 game.change_scene('scene_name') # change the active/current scene
 game.set_scene('scene_name', my_scene) # a shortcut for add_scene and change_scene
@@ -211,9 +212,11 @@ my_scene = Scene(ignore_pause = True)
 or
 
 ```python
-class MainScene (Scene):
+class MyScene (Scene):
     def load(self):
         self.ignore_pause = True
+
+my_scene = MyScene()
 ```
 
 # GameObject
@@ -241,10 +244,80 @@ game.set_scene('main', MainScene())
 game.run()
 ```
 
-## GameObject Default props
+## GameObject default props
 
 ```python
 MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False, active = True, visible = True)
 
 game.get_active_scene().instant_game_object(MyObject)
+```
+
+## GameObject methods
+```python
+active_scene = game.get_active_scene()
+player = GameObject()
+
+active_scene.add_game_object('player', player) # create a GameObject with 'player' name
+active_scene.instant_game_object(player) # create a GameObject without specifying a name
+active_scene.remove_game_object('player') # remove GameObject by name
+player = active_scene.get_game_object('player')
+```
+
+## GameObject size
+
+```
+player = GameObject(width=25, height=25)
+```
+
+or
+
+```python
+player.set_size(25, 25) # width, height
+```
+
+or
+
+```python
+player.width = 50
+player.height = 25
+```
+
+## GUI
+
+GameObjects has 'gui' enabled will be fixed in the window.
+
+```python
+GUI = GameObject(width=200, height=50, gui=True)
+```
+
+## Game Object Reset
+
+```python
+player.reset()
+```
+
+## Tags
+
+```python
+active_scene.instant_game_object(GameObject(tags=['enemy']))
+
+enemies = active_scene.get_game_objects_by_tag('enemy')
+```
+
+### Tags methods
+```python
+player.add_tag('player')
+player.remove_tag('player')
+
+if player.has_tag('player'):
+    print(player, 'is a player!')
+
+print(player.get_tags())
+```
+
+## Z-Index
+
+```python
+print(player.z)
+player.set_z(10)
 ```

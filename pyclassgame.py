@@ -101,6 +101,9 @@ class GameObject:
     def set_z(self, z):
         self.z = z
         self.scene.sort_game_objects_by_z()
+    def set_size(self, width, height):
+        self.width = width
+        self.height = height
 
 class Image(GameObject):
     def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
