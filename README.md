@@ -30,7 +30,7 @@ pyclassgame is a library that adds functionality and structure to pygame, you ca
     - [Extend](#extend-gameobject-class)
     - [Coords](#coordinates)
     - [Color](#color)
-    - [Alpha Color](#aplha-color)
+    - [Alpha Color](#alpha-color)
     - [Size](#gameobject-size)
     - [GUI](#gui)
     - [Reset](#gameobject-reset)
