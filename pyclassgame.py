@@ -54,7 +54,7 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False):
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
@@ -67,6 +67,7 @@ class GameObject:
         self.alpha = alpha
         self.tags = tags
         self.gui = gui
+        self.ignore_pause = ignore_pause
         self.self_copy = copy.deepcopy(self)
     def reset(self):
         self.self_copy_reset = copy.deepcopy(self.self_copy)

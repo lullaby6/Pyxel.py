@@ -18,6 +18,9 @@
     - [Custom Event](#custom-event)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
+    - [Default Props](##default-props)
+- [Image](#Image)
+- [Text](#Text)
 - [Camera](#camera)
 - [Colors](#Colors)
 - [Functions](#functions)
@@ -65,7 +68,7 @@ game.set_size(1280, 720)
 ## Background Color
 
 ```python
-game.bg_color = (123, 255, 100) # default is (255, 255, 255) (white)
+game.bg_color = (123, 255, 100) # default is (0, 0, 0) (black)
 ```
 
 ## Background Color Alpha
@@ -184,4 +187,12 @@ game = Game()
 game.set_scene('main', MainScene())
 
 game.run()
+```
+
+## Default props
+
+```python
+MyObject = GameObject(x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False)
+
+game.scene.instant_game_object(MyObject)
 ```

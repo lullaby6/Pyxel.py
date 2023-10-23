@@ -41,6 +41,7 @@
 - GameObject Ignore Pause
 - GameObject DontDestroyOnLoad
 - GameObject Active
+- GameObject Visible
 - Resizable Window
 - Camera Shake
 - Mouse Enter Event
