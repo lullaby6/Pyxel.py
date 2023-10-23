@@ -7,6 +7,8 @@
 
 # Game
 
+## Initializating game
+
 ```python
 from pyclassgame import Game
 
@@ -16,6 +18,8 @@ game.run()
 ```
 
 # Scenes
+
+# Creating a scene
 
 ```python
 from pyclassgame import Game, Scene
@@ -35,6 +39,8 @@ game.run()
 ```
 
 # GameObject
+
+## Creating a simple GameObject
 
 ```python
 from pyclassgame import Game, Scene, GameObject
