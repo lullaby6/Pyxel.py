@@ -98,7 +98,7 @@ game.quit_on_escape = True # can be True or False, by default is False
 
 # Scenes
 
-# Creating a scene
+## Creating a scene
 
 ```python
 from pyclassgame import Game, Scene
