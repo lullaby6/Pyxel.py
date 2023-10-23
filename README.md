@@ -16,6 +16,9 @@
     - [Quit on Escape](#quit-on-escape)
 - [Scenes](#scenes)
 - [GameObject](#gameobject)
+- [Camera](#camera)
+- [Colors](#Colors)
+- [Functions](#functions)
 
 # Game
 
