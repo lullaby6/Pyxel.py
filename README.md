@@ -472,3 +472,7 @@ class MainScene (Scene):
     def key_down(self, event, key_name):
         if key_name == 'p': self.game.toggle_pause()
 ```
+
+<br>
+
+[Return to the Index](#index)
