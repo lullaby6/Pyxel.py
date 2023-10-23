@@ -400,6 +400,7 @@ player.set_z(10)
 - ```focus```
 
 ## Exmaple
+
 ```python
 class MainScene (Scene):
     def key_down(self, event, key_name):
