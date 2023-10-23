@@ -384,6 +384,8 @@ player.set_z(10)
 
 ## All events
 
+Events for Scenes and GameObjects.
+
 - ```key_down```
 - ```key_up```
 - ```mouse_down```
@@ -398,6 +400,14 @@ player.set_z(10)
 - ```resize```
 - ```expose```
 - ```focus```
+
+## Extra events
+
+- ```on_pause```
+
+## GameObjects exclusive events
+- ```on_collide```
+- ```on_click```
 
 ## Exmaple
 
