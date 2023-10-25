@@ -263,7 +263,7 @@ class Scene:
         return objects
 
 class Game:
-    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', cursor = True, fps = 60, quit_on_escape = False, default_scene = Scene()):
+    def __init__(self, width = 640, height = 480, bg_color = Colors['black'], bg_alpha = 255, title = 'Title', cursor = True, fps = 60, fill_on_pause = True, quit_on_escape = False, default_scene = Scene()):
         pygame.init()
         self.set_title(title)
         self.width = width
@@ -278,10 +278,6 @@ class Game:
 
         self.set_cursor_visibility(cursor)
 
-        self.scenes = {}
-        self.active_scene = None
-        self.set_scene('default', default_scene)
-
         self.quit_on_escape = quit_on_escape
         self.fullscreen = False
 
@@ -289,8 +285,16 @@ class Game:
 
         self.running = False
         self.pause = False
+        self.fill_on_pause = fill_on_pause
 
         self.pygame = pygame
+
+        self.scenes = {}
+        self.active_scene = None
+        self.set_scene('default', default_scene)
+
+        if hasattr(self, 'load'):
+            self.load()
     def run(self):
         self.running = True
         while self.running:
@@ -338,6 +342,8 @@ class Game:
                     if event.type == self.pygame_events[eventName]:
                         key_name = None
                         if hasattr(event, 'key'): key_name = pygame.key.name(event.key)
+                        if hasattr(self, eventName):
+                            getattr(self, eventName)(event, key_name)
                         if hasattr(active_scene, eventName):
                             getattr(active_scene, eventName)(event, key_name)
                         for game_object in game_objects:
@@ -351,11 +357,17 @@ class Game:
             if self.camera.zoom != 1.0:
                 self.screen.fill(self.bg_color)
 
-            # if(self.pause == False):
-            self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-            self.bg_surface.set_alpha(self.bg_alpha)
-            self.bg_surface.fill(self.bg_color)
-            self.screen.blit(self.bg_surface, (0, 0))
+            if self.pause == False or (self.pause == True and self.fill_on_pause == True):
+                self.bg_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+                self.bg_surface.set_alpha(self.bg_alpha)
+                self.bg_surface.fill(self.bg_color)
+                self.screen.blit(self.bg_surface, (0, 0))
+
+            if hasattr(self, 'update'):
+                self.update()
+
+            if hasattr(self, 'update'):
+                self.draw()
 
             if ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
                 if hasattr(active_scene, 'update'):
@@ -434,6 +446,9 @@ class Game:
         active_scene = self.get_active_scene()
         game_objects = active_scene.game_objects.values()
 
+        if hasattr(self, 'on_pause'):
+            self.on_pause(self.pause)
+
         if hasattr(active_scene, 'on_pause') and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
             active_scene.on_pause(self.pause)
         for game_object in game_objects:
@@ -451,7 +466,7 @@ class Game:
         pygame.mouse.set_visible(visibility)
     def toggle_cursor_visibility(self):
         self.set_cursor_visibility(not self.cursor)
-    def hidde_cursor(self):
+    def hide_cursor(self):
         self.cursor = False
         pygame.mouse.set_visible(False)
     def show_cursor(self):
@@ -460,6 +475,9 @@ class Game:
     def custom_event(self, eventName, prop = None):
         active_scene = self.get_active_scene()
         game_objects = active_scene.game_objects.values()
+
+        if hasattr(self, eventName):
+            getattr(self, eventName)(prop)
 
         if hasattr(active_scene, eventName) and ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
             getattr(active_scene, eventName)(prop)

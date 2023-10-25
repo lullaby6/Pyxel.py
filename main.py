@@ -1,4 +1,4 @@
-from pyxel import Game, Scene, GameObject, Colors, Image
+from pyxes import Game, Scene, GameObject, Colors, Image
 
 class MainScene (Scene):
     def __init__(self):
@@ -48,7 +48,6 @@ class Player (GameObject):
     def on_collide(self, other):
         print('collide!!!!!!!!!!!!')
 
-
     def key_down(self, event, keyname):
         if keyname == 'w': self.y -= 10
         if keyname == 'a': self.x -= 10
@@ -56,9 +55,7 @@ class Player (GameObject):
         if keyname == 'd': self.x += 10
 
 if __name__ == "__main__":
-    game = Game(width=640, height=480, bg_color=Colors['lightblue'], bg_alpha=60, title='Title', quit_on_escape=True)
+    game = Game(width=640, height=480, bg_color=Colors['lightblue'], bg_alpha=60, title='Title', quit_on_escape=True, default_scene=MainScene())
     game.set_icon('icon.png')
-
-    game.set_scene('main', MainScene())
 
     game.run()
