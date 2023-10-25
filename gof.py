@@ -1,11 +1,10 @@
-import random, copy
+import pyxes, random, copy
 
-import pyxes
+size = 200
+rows_count = size
+columns_count = int(size+(size/2))
 
-rows_count = int(720 / 6)
-columns_count = int(1280 / 6)
-
-cell_size = 5
+cell_size = 3
 
 board_base = [[0] * columns_count for _ in range(rows_count)]
 
@@ -21,12 +20,6 @@ def gen_board():
 
 board = gen_board()
 board_neighbors = copy.deepcopy(board_base)
-
-# random alive cells
-for row in range(rows_count):
-    for column in range(columns_count):
-        if random.random() < 0.25:
-            board[row][column] = 1
 
 # extends game because game methods ignore pause
 class Game (pyxes.Game):
@@ -64,18 +57,18 @@ class Scene (pyxes.Scene):
                             neighbors += 1
                 board_neighbors[row][column] = neighbors
 
-        # game of life logic
+        # logic
         for row in range(rows_count):
             for column in range(columns_count):
                 # if cell alive
                 if board[row][column] == 1:
                     if board_neighbors[row][column] < 2 or board_neighbors[row][column] > 3:
                         board[row][column] = 0
-                # if cell dead
+                # if cell dead and it have 3 neighbors
                 elif board_neighbors[row][column] == 3:
                     board[row][column] = 1
 
 if __name__ == '__main__':
-    game = Game(width=columns_count * cell_size, height=rows_count * cell_size, cursor=False, title='Game of Life', fps=5, default_scene=Scene())
+    game = Game(width=columns_count * cell_size, height=rows_count * cell_size, cursor=False, title='Game of Life', fps=5, quit_on_escape=True, default_scene=Scene())
 
     game.run()

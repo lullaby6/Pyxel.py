@@ -7,6 +7,8 @@
 - Game DeltaTime
 - Game Title
 - Game Mouse Position
+- Game Load Update Events
+- Game Fill On Pause Option
 - Custom Events
 - GameObjects
 - GameObject CRUD

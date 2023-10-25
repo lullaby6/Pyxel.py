@@ -58,7 +58,7 @@ Pyxes is a library that adds functionality and structure to pygame, you can stil
 ## Initializating game
 
 ```python
-from pyclassgame import Game
+from pyxes import Game
 
 game = Game()
 
@@ -181,7 +181,7 @@ class Player (GameObject):
 ## Creating a scene
 
 ```python
-from pyclassgame import Game, Scene
+from pyxes import Game, Scene
 
 class MainScene (Scene):
     def load(self):
@@ -266,7 +266,7 @@ my_scene = MyScene()
 ## Creating a GameObject
 
 ```python
-from pyclassgame import Game, Scene, GameObject
+from pyxes import Game, Scene, GameObject
 
 class Player (GameObject):
     def key_down(self, event, keyname):
@@ -279,9 +279,7 @@ class MainScene (Scene):
     def load(self):
         self.add_game_object('player', Player())
 
-game = Game()
-
-game.set_scene('main', MainScene())
+game = Game(default_scene=MainScene())
 
 game.run()
 ```
