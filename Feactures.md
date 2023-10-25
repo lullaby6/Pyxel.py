@@ -1,5 +1,3 @@
-# pycassgame
-
 ## Current Features
 - Game
 - Game Pause
@@ -8,6 +6,7 @@
 - Game FPS
 - Game DeltaTime
 - Game Title
+- Game Mouse Position
 - Custom Events
 - GameObjects
 - GameObject CRUD
@@ -22,6 +21,12 @@
 - GameObject Active
 - GameObject Visible
 - GameObject Ignore Pause
+- GameObject Scale
+- GameObject Rotation
+- Image Scale
+- Image Rotation
+- Image Alpha
+- Image Offset
 - Scenes
 - Scene Reset
 - Scene CRUD
@@ -43,7 +48,6 @@
 - Physics
 - TileMaps
 - Particles
-- GameObject Rotation
 - GameObject DontDestroyOnLoad
 - Resizable Window
 - Camera Shake

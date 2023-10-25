@@ -1,4 +1,4 @@
-from pyclassgame import Game, Scene, GameObject, Colors, Image
+from pyxel import Game, Scene, GameObject, Colors, Image
 
 class MainScene (Scene):
     def __init__(self):
@@ -13,7 +13,8 @@ class MainScene (Scene):
         self.add_game_object('player', Player(color=Colors['red'], x=100, y=100, z=1, width=75, height=100))
         self.add_game_object('cube', GameObject(width = 30, height = 50, z=0, color=Colors['blue']))
         gui = self.instant_game_object(GameObject(gui = True))
-        self.instant_game_object(Image(image_path='img.png', image_alpha=255, image_width=32, image_height=32, x=100, y=250))
+        # self.instant_game_object(Image(image_path='img.png', image_alpha=255, image_width=32, image_height=32, x=100, y=250, width=500, height=500))
+        self.instant_game_object(Image(image_path='img.png', x=200, y=100, image_scale_x = 0.5, image_rotation=0))
 
     def update(self):
         cube = self.get_game_object('cube')

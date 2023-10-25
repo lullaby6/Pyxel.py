@@ -1,6 +1,6 @@
-# pyclassgame
+# Pyxel
 
-pyclassgame is a library that adds functionality and structure to pygame, you can still use all your pygame code but remove a lot of boilerplate code.
+Pyxel is a library that adds functionality and structure to pygame, you can still use all your pygame code but with less of a lot boilerplate code!
 
 # Index
 - [Game](#game)

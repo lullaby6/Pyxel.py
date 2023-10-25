@@ -1,4 +1,4 @@
-import pygame, sys, json, uuid, datetime, os, copy
+import pygame, json, uuid, datetime, os, copy
 
 def load_json(path):
     with open(path, 'r') as f:
@@ -54,7 +54,7 @@ Colors = {
 }
 
 class GameObject:
-    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, ignore_pause = False, active = True, visible = True):
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, scale_x = 1, scale_y = 1, rotation = 0, tags = [], gui = False, ignore_pause = False, active = True, visible = True):
         self.id = str(uuid.uuid4())
         self.name = None
         self.scene = None
@@ -70,6 +70,9 @@ class GameObject:
         self.ignore_pause = ignore_pause
         self.active = active
         self.visible = visible
+        self.scale_x = scale_x
+        self.scale_y = scale_y
+        self.rotation = rotation
         self.self_copy = copy.deepcopy(self)
     def reset(self):
         self.self_copy_reset = copy.deepcopy(self.self_copy)
@@ -82,12 +85,16 @@ class GameObject:
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
         self.surface.fill(self.color)
-        drawingX = self.x
-        drawingY = self.y
+
+        self.drawing_x = self.x
+        self.drating_y = self.y
         if self.gui == False:
-            drawingX -= self.scene.game.camera.x
-            drawingY -= self.scene.game.camera.y
-        self.scene.game.screen.blit(self.surface, (drawingX, drawingY))
+            self.drawing_x -= self.scene.game.camera.x
+            self.drating_y -= self.scene.game.camera.y
+
+        self.scaled_surface = pygame.transform.scale(self.surface, (self.width * self.scale_x, self.height * self.scale_y))
+        self.rotated_surface = pygame.transform.rotate(self.scaled_surface, self.rotation)
+        self.scene.game.screen.blit(self.rotated_surface, (self.drawing_x, self.drating_y))
     def add_tag(self, tag):
         self.tags.append(tag)
         return tag
@@ -106,19 +113,24 @@ class GameObject:
         self.height = height
 
 class Image(GameObject):
-    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, tags = [], gui = False, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0):
-        super().__init__(x=x, y=y , z=z, width=width, height=height, color=color, alpha=alpha, tags=tags, gui=gui)
+    def __init__(self, x = 0, y = 0, z = 0, width = 10, height = 10, color = Colors['white'], alpha = 255, scale_x = 1, scale_y = 1, rotation = 0, tags = [], gui = False, ignore_pause = False, active = True, visible = True, image_path = '', image_width = None, image_height = None, image_alpha = 255, image_offset_x = 0, image_offset_y = 0, image_scale_x = 1, image_scale_y = 1, image_rotation = 0):
+        super().__init__(x=x, y=y , z=z, width=width, height=height, color=color, alpha=alpha, scale_x=scale_x, scale_y=scale_y, rotation=rotation, tags=tags, gui=gui, ignore_pause=ignore_pause, active=active, visible=visible)
         self.image_offset_x = image_offset_x
         self.image_offset_y = image_offset_y
         self.image_alpha = image_alpha
+        self.image_scale_x = image_scale_x
+        self.image_scale_y = image_scale_y
+        self.image_rotation = image_rotation
         self.load_image(image_path, image_width, image_height)
     def drawing_image(self):
-        drawingX = self.x
-        drawingY = self.y
+        self.image_drawing_x = self.x
+        self.image_drawing_y = self.y
         if self.gui == False:
-            drawingX -= self.scene.game.camera.x
-            drawingY -= self.scene.game.camera.y
-        self.scene.game.screen.blit(self.scaled_image, (drawingX + self.image_offset_x, drawingY + self.image_offset_y, self.image_width, self.image_height))
+            self.image_drawing_x -= self.scene.game.camera.x
+            self.image_drawing_y -= self.scene.game.camera.y
+        self.scaled_image_scale = pygame.transform.smoothscale(self.scaled_image.convert_alpha(), (self.image_width * self.image_scale_x, self.image_height * self.image_scale_y))
+        self.rotated_image = pygame.transform.rotate(self.scaled_image_scale, self.image_rotation)
+        self.scene.game.screen.blit(self.rotated_image, (self.image_drawing_x + self.image_offset_x, self.image_drawing_y + self.image_offset_y, self.image_width, self.image_height))
     def load_image(self, image_path, image_width = None, image_height = None):
         self.image_path = image_path
         self.image = pygame.image.load(self.image_path)
@@ -308,6 +320,11 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE and self.quit_on_escape:
                         self.running = False
+                elif event.type == pygame.MOUSEMOTION:
+                    self.mouse_fixed_posotion_x = event.pos[0]
+                    self.mouse_fixed_posotion_y = event.pos[1]
+                    self.mouse_posotion_x = event.pos[0] + self.camera.x
+                    self.mouse_posotion_y = event.pos[1] + self.camera.y
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     for game_object in game_objects:
                         cursor = None
