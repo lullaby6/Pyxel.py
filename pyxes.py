@@ -366,7 +366,7 @@ class Game:
             if hasattr(self, 'update'):
                 self.update()
 
-            if hasattr(self, 'update'):
+            if hasattr(self, 'draw'):
                 self.draw()
 
             if ((active_scene.ignore_pause == True and self.pause == True) or (self.pause == False)):
